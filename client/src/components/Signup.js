@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Signup = () => {
+const Signup = (login) => {
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [confirmation, setConfirmation] = useState("")
@@ -17,12 +17,14 @@ const Signup = () => {
                 password: password, 
                 confirmation: confirmation
             })
-        })
+        }) 
+        .then(res => res.json())
+        .then(user => login(user))
     }
 
     return (
         <div>
-            <form onsubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <label>Name:  </label>
                 <input
                     type="text"
@@ -33,7 +35,7 @@ const Signup = () => {
                 <br/>
                 <label>Password:  </label>
                 <input
-                    type="text"
+                    type="password"
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -41,7 +43,7 @@ const Signup = () => {
                 <br/>
                 <label>Re-enter Password:  </label>
                 <input 
-                    type="text"
+                    type="password"
                     id="confirmation"
                     value={confirmation}
                     onChange={(e) => setConfirmation(e.target.value)}
