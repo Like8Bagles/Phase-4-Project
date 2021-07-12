@@ -51,7 +51,7 @@ const Shows = () => {
         )
     } else {
         return (
-            <h1>Not Authorized</h1>
+            <h1>Oops! Gotta log in to see this!</h1>
         )
     }
     
