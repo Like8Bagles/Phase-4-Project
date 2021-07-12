@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import ShowForm from '../components/ShowForm'
+import ShowLink from '../components/ShowLink'
 
 const Shows = () => {
     const [shows, setShows] = useState([])
@@ -38,7 +40,7 @@ const Shows = () => {
         })
     }
 
-    const showList = shows.map(s => <div><li key={s.id}>{s.name}</li><br/></div>)
+    const showList = shows.map(s => <div ><ShowLink key={s.id} command={s}/><br/></div>)
 
     if (error === ""){
         return (
