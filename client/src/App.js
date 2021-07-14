@@ -25,7 +25,7 @@ function App() {
         })
       }
     })
-  })
+  }, [])
 
   const login = (user) => {
     if (!user.errors) {
@@ -45,6 +45,7 @@ function App() {
     .then(() => {
       console.log("Logged out.")
       setLoggedIn(false)
+      console.log(loggedIn)
       setUser({})
     })
     history.push('/')
@@ -54,7 +55,7 @@ function App() {
     <div className="App">
       <Navigation user={user} loggedIn={loggedIn} login={login} logout={logout} />
       <Switch>
-        <Route exact path="/" component={Home}/>
+        <Route exact path="/" component={Home} loggedIn={loggedIn}/>
         <Route exact path="/signup" render={routerProps => <Signup {...routerProps} errors={errors} user={user} loginUser={login} logout={logout} />} />
         <Route exact path="/login" render={routerProps => <Login {...routerProps} loginUser={login} logout={logout} />} />
         <Route exact path="/shows" component={Shows} />

@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
-const Signup = (login) => {
+const Signup = (props) => {
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [confirmation, setConfirmation] = useState("")
+    const [errorsList, setErrorsList] = useState([])
+    const history = useHistory()
 
     const handleSubmit = (e) =>{
         e.preventDefault()
@@ -15,11 +18,11 @@ const Signup = (login) => {
             body: JSON.stringify({
                 name: name, 
                 password: password, 
-                confirmation: confirmation
+                password_confirmation: confirmation
             })
         }) 
         .then(res => res.json())
-        .then(user => login(user))
+        .then(user => props.loginUser(user))
     }
 
     return (

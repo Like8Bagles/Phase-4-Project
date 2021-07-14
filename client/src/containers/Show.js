@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-const Show = () => {
+const Show = (props) => {
     const [show, setShow] = useState({})
     const [error, setError] = useState("")
 
@@ -9,17 +9,13 @@ const Show = () => {
         .then(res => res.json())
         .then(data => {
             console.log(data)
-            if (data){
-                if (data.error){
-                    setError(data.error)
-                } else {
-                    setShow(data)
-                }
+            if (data.error){
+                setError(data.error)
             } else {
-                setError("Not Authorized")
+                setShow(data)
             }
         })
-    }, [])
+    }, [props.match.params.id])
 
     // show.genre
 
@@ -27,10 +23,10 @@ const Show = () => {
         return (
         <div>
             <ul>
-                <h2>{show.name}</h2>
-                <h3>{show.genre}</h3>
-                <h3>{show.studio}</h3>
-                <h3>{show.rating}</h3>
+                <h2>Show Name: {show.name}</h2>
+                <h3>Genre: {show.genre}</h3>
+                <h3>Studio: {show.studio}</h3>
+                <h3>Rating: {show.rating}</h3>
             </ul>
         </div>
         )

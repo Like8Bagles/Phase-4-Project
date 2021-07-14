@@ -1,4 +1,5 @@
 class ShowsController < ApplicationController
+    skip_before_action :authorize, only: :create
 
     def index
         user = find_user
@@ -7,6 +8,9 @@ class ShowsController < ApplicationController
     end
 
     def show
+        user = find_user
+        show = user.shows.find_by(id: params[:id])
+        render json: show
     end
 
     def create
@@ -16,6 +20,17 @@ class ShowsController < ApplicationController
     end
 
     def destroy
+        user =find_user
+        show = user.shows.find_by(id: params[:id])
+        show.delete
+        head :no_content
+    end
+
+    def update
+        user = find_user
+        show = user.shows.find_by(id: params[:id])
+        show.update(show_params)
+        render json: show, status: :created
     end
 
     private 

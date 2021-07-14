@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const ShowForm = (addShow) => {
+const ShowForm = (props) => {
     const [name, setName] = useState("")
     const [studio, setStudio] = useState("")
     const [genre, setGenre] = useState("")
@@ -8,7 +8,7 @@ const ShowForm = (addShow) => {
 
     const handleSubmit = (e) =>{
         e.preventDefault()
-        addShow({
+        props.addShow({
             name: name,
             studio: studio, 
             genre: genre,
