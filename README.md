@@ -15,7 +15,7 @@
 
 ## Description
 
-  This application will allow the user to:
+  - This application will allow the user to:
     - Signup or Login
     - If logged in the user can:
       - Create a list of shows
