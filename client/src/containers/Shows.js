@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import ShowForm from '../components/ShowForm'
 import ShowLink from '../components/ShowLink'
 import DeleteShow from '../components/DeleteShow'
-import UpdateShow from '../components/UpdateShow'
+// import UpdateShow from '../components/UpdateShow'
 
 const Shows = () => {
     const [shows, setShows] = useState([])
@@ -14,10 +14,10 @@ const Shows = () => {
         .then(res => res.json())
         .then(data => {
             console.log(data)
-            if (data.error){
-                setError(data.error)
+            if (data.errors){
+                setError(data.errors)
             } else {
-                setShows([data])
+                setShows(data)
             }
         })
     }, [])
@@ -51,20 +51,22 @@ const Shows = () => {
         })
     }
 
-    const updateShow = (newShow) => {
-        fetch(`/shows/${id}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json"
-            },
-        })
-        .then(() => {
-            const newShows = show.map((s) => {s.id === newShow.id ? newShow : s;});
-            setShows(newShows);
-        })
-      }
+    // const updateShow = (newShow, id) => {
+    //     fetch(`/shows/${id}`, {
+    //         method: "PATCH",
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         },
+    //     })
+    //     .then(() => {
+    //         const newShows = shows.map((s) => {s.id === newShow.id ? newShow : s;});
+    //         setShows(newShows);
+    //     })
+    //   }
 
-    const showList = shows.map(s => <li><ShowLink key={s.id} show={s} /><DeleteShow delete={deleteShow} show={s} /><UpdateShow updateShow={updateShow}</li>)
+    const showList = shows.map(s => <li><ShowLink key={s.id} show={s} /><DeleteShow delete={deleteShow} show={s} id={s.id}/>
+    {/* <UpdateShow updateShow={updateShow} id={id}/> */}
+    </li>)
 
     if (error === ""){
         return (
