@@ -1,14 +1,16 @@
 import React, {useState} from 'react'
 
 const UpdateShow = (props) => {
-    const [name, setName] = useState("")
-    const [studio, setStudio] = useState("")
-    const [genre, setGenre] = useState("")
-    const [rating, setRating] = useState("")
+    const [id, setId] = useState(props.s.id)
+    const [name, setName] = useState(props.s.name)
+    const [studio, setStudio] = useState(props.s.studio)
+    const [genre, setGenre] = useState(props.s.genre)
+    const [rating, setRating] = useState(props.s.rating)
 
     const handleSubmit = (e) =>{
         e.preventDefault()
         props.updateShow({
+            id: id,
             name: name,
             studio: studio, 
             genre: genre,

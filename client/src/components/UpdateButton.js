@@ -1,10 +1,14 @@
-import React from 'react'
+import React, {useState} from 'react'
 import UpdateShow from './UpdateShow'
 
+
 const UpdateButton = (props) => {
+    
+    const [formFlag, setFormFlag] = useState(false)
+
     return (
         <div>
-            {formFlag ? <UpdateShow updateShow={props.updateShow} /> : <button onClick={() => setFormFlag(true)}>Update Show</button>}
+            {props.updateFormFlag ? <UpdateShow updateShow={props.updateShow} s={props.show}/> : <button onClick={() => props.setUpdateFormFlag(true)}>Update Show</button>}
         </div>
     )
 }

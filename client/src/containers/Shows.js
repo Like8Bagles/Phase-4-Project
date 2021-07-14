@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react'
 import ShowForm from '../components/ShowForm'
 import ShowLink from '../components/ShowLink'
 import DeleteShow from '../components/DeleteShow'
-// import UpdateShow from '../components/UpdateShow'
+import UpdateButton from '../components/UpdateButton'
 
 const Shows = () => {
     const [shows, setShows] = useState([])
     const [error, setError] = useState("")
     const [formFlag, setFormFlag] = useState(false) 
+    const [updateFormFlag, setUpdateFormFlag] = useState(false)
 
     useEffect(() => {
         fetch('/shows')
@@ -51,21 +52,26 @@ const Shows = () => {
         })
     }
 
-    // const updateShow = (newShow, id) => {
-    //     fetch(`/shows/${id}`, {
-    //         method: "PATCH",
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         },
-    //     })
-    //     .then(() => {
-    //         const newShows = shows.map((s) => {s.id === newShow.id ? newShow : s;});
-    //         setShows(newShows);
-    //     })
-    //   }
+    const updateShow = (show) => {
+        fetch(`/shows/${show.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(show)
+        })
+        .then(res => res.json())
+        .then(newShow => {
+            const newShows = shows.map(s => s.id === newShow.id ? newShow : s);
+            setShows(newShows);
+            setUpdateFormFlag(false)
+        })
+    }
 
-    const showList = shows.map(s => <li><ShowLink key={s.id} show={s} /><DeleteShow delete={deleteShow} show={s} id={s.id}/>
-    {/* <UpdateShow updateShow={updateShow} id={id}/> */}
+    const showList = shows.map(s => <li>
+        <ShowLink key={s.id} show={s} />
+        <DeleteShow delete={deleteShow} show={s} id={s.id}/>
+        <UpdateButton updateShow={updateShow} updateFormFlag={updateFormFlag} setUpdateFormFlag={setUpdateFormFlag} id={s.id} show={s}/>
     </li>)
 
     if (error === ""){
