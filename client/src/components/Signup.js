@@ -22,8 +22,17 @@ const Signup = (props) => {
             })
         }) 
         .then(res => res.json())
-        .then(user => props.loginUser(user))
+        .then(user => {
+            if (user.errors) {
+                console.log(user.errors)
+                setErrorsList(user.errors)
+            } else {
+            props.loginUser(user)}
+            }
+        )
     }
+
+    const error = errorsList.map(e => <li>{e}</li>)
 
     return (
         <div>
@@ -55,6 +64,7 @@ const Signup = (props) => {
                 <input 
                     type="submit"
                 />
+                {error}
             </form>
         </div>
     )

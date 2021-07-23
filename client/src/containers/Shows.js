@@ -6,7 +6,7 @@ import UpdateButton from '../components/UpdateButton'
 
 const Shows = () => {
     const [shows, setShows] = useState([])
-    const [error, setError] = useState("")
+    const [error, setError] = useState([])
     const [formFlag, setFormFlag] = useState(false) 
     const [updateFormFlag, setUpdateFormFlag] = useState(false)
 
@@ -33,9 +33,13 @@ const Shows = () => {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
-            setShows([...shows, data])
-            setFormFlag(false)
+            if (data.errors) {
+                console.log(data)
+                setError(data.errors)
+            } else {
+                setShows([...shows, data])
+                setFormFlag(false)
+            }
         })
     }
 
@@ -74,20 +78,17 @@ const Shows = () => {
         <UpdateButton updateShow={updateShow} updateFormFlag={updateFormFlag} setUpdateFormFlag={setUpdateFormFlag} id={s.id} show={s}/>
     </li>)
 
-    if (error === ""){
-        return (
+    const errorList = error.map(e => <h1>{e}</h1>)
+
+    return (
         <div>
             <ul>
                 {showList}
                 {formFlag ? <ShowForm addShow={addShow} /> : <button onClick={() => setFormFlag(true)}>Add Show</button>}
+                {errorList}
             </ul>
         </div>
-        )
-    } else {
-        return (
-            <h1>Oops! Gotta log in to see this!</h1>
-        )
-    }
+    )
     
 }
 
